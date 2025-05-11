@@ -12,6 +12,7 @@ export default function Page() {
       const reader = new FileReader();
       reader.onload = (event) => {
         setImage(event.target.result);
+        setBlurredImage(null); // reset when new image is uploaded
       };
       reader.readAsDataURL(file);
     }
@@ -33,7 +34,7 @@ export default function Page() {
   };
 
   return (
-    <main style={{ padding: 20, maxWidth: 600, margin: 'auto' }}>
+    <main style={{ padding: 20, maxWidth: 800, margin: 'auto' }}>
       <h2>Ứng dụng làm mờ ảnh</h2>
       <input type="file" accept="image/*" onChange={handleImageUpload} />
       <div style={{ marginTop: 10 }}>
@@ -48,10 +49,18 @@ export default function Page() {
         <span> {kernelSize}px</span>
       </div>
       <button style={{ marginTop: 10 }} onClick={handleBlur}>Xử lý</button>
-      {blurredImage && (
-        <div style={{ marginTop: 20 }}>
-          <h4>Ảnh sau khi làm mờ:</h4>
-          <img src={blurredImage} alt="Blurred" style={{ width: '100%' }} />
+      {image && (
+        <div style={{ display: 'flex', gap: 20, marginTop: 30 }}>
+          <div style={{ flex: 1 }}>
+            <h4>Ảnh gốc:</h4>
+            <img src={image} alt="Original" style={{ width: '100%' }} />
+          </div>
+          {blurredImage && (
+            <div style={{ flex: 1 }}>
+              <h4>Ảnh sau khi làm mờ:</h4>
+              <img src={blurredImage} alt="Blurred" style={{ width: '100%' }} />
+            </div>
+          )}
         </div>
       )}
     </main>
